@@ -11,7 +11,7 @@ import StatCard from '../StatCard';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function AnalyticsView() {
-  const { data, getLoggedHours } = useAppData();
+  const { data, getLoggedHours, theme } = useAppData();
 
   const allKeys = useMemo(() => Object.keys(data.tasks), [data.tasks]);
 
@@ -97,7 +97,8 @@ export default function AnalyticsView() {
   function heatColor(hours: number) {
     if (hours <= 0) return 'var(--surface3)';
     const intensity = Math.min(hours / 8, 1);
-    return `rgba(10,10,10,${0.15 + intensity * 0.75})`;
+    const overlay = theme === 'dark' ? '244,244,245' : '10,10,10';
+    return `rgba(${overlay},${0.15 + intensity * 0.75})`;
   }
 
   return (
@@ -142,7 +143,7 @@ export default function AnalyticsView() {
         <StatCard icon="★" value={bestStreak} label="Best streak (days)" accent="var(--accent-assignment)" />
       </div>
 
-      <div className="mb-6 fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+      <div className="mb-6 fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
         <div className="font-display mb-4 text-[15px] font-semibold">Activity heatmap (last 16 weeks)</div>
         <div className="overflow-x-auto">
           <div className="grid grid-flow-col grid-rows-7 gap-1" style={{ width: 'max-content' }}>
@@ -166,7 +167,7 @@ export default function AnalyticsView() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <div className="fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+        <div className="fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
           <div className="font-display mb-4 text-[15px] font-semibold">Hours by category</div>
           {categoryEntries.length === 0 ? (
             <p className="py-10 text-center text-sm" style={{ color: 'var(--muted)' }}>
@@ -179,14 +180,23 @@ export default function AnalyticsView() {
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
-                  plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 } } } },
+                  plugins: {
+                    legend: {
+                      position: 'right',
+                      labels: {
+                        boxWidth: 10,
+                        font: { size: 11 },
+                        color: theme === 'dark' ? '#a1a1aa' : '#767676'
+                      }
+                    }
+                  },
                 }}
               />
             </div>
           )}
         </div>
 
-        <div className="fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+        <div className="fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
           <div className="font-display mb-4 text-[15px] font-semibold">Goal description</div>
           {data.goals.description ? (
             <p className="text-sm" style={{ color: 'var(--ink-soft)' }}>

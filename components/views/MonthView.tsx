@@ -24,7 +24,7 @@ interface MonthViewProps {
 }
 
 export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: MonthViewProps) {
-  const { data, getTasks, getLoggedHours } = useAppData();
+  const { data, getTasks, getLoggedHours, theme } = useAppData();
   const [viewDate, setViewDate] = useState(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1));
 
   const { y, m } = useMemo(() => ({ y: viewDate.getFullYear(), m: viewDate.getMonth() }), [viewDate]);
@@ -72,8 +72,8 @@ export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: Mont
       {
         label: 'Hours',
         data: dailySeries,
-        borderColor: '#0a0a0a',
-        backgroundColor: 'rgba(10,10,10,0.06)',
+        borderColor: theme === 'dark' ? '#f4f4f5' : '#0a0a0a',
+        backgroundColor: theme === 'dark' ? 'rgba(244,244,245,0.06)' : 'rgba(10,10,10,0.06)',
         fill: true,
         tension: 0.35,
         pointRadius: 0,
@@ -155,7 +155,7 @@ export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: Mont
         <StatCard icon="◆" value={(monthHours / last.getDate()).toFixed(1) + 'h'} label="Avg hours / day" accent="var(--accent-assignment)" />
       </div>
 
-      <div className="mb-6 fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+      <div className="mb-6 fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
         <div className="mb-3 grid grid-cols-7 gap-1">
           {WEEKDAY_INITIAL.map((d, i) => (
             <div key={i} className="py-1 text-center text-[11px] font-semibold" style={{ color: 'var(--muted2)' }}>
@@ -184,7 +184,7 @@ export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: Mont
                 style={{
                   opacity: otherMonth ? 0.3 : 1,
                   borderColor: isSelected ? 'var(--ink)' : isToday ? 'var(--ink)' : 'var(--border)',
-                  background: tasks.length ? `rgba(10,10,10,${0.06 + intensity * 0.3})` : '#fff',
+                  background: tasks.length ? `rgba(${theme === 'dark' ? '244,244,245' : '10,10,10'},${0.06 + intensity * 0.3})` : 'var(--card-bg)',
                 }}
               >
                 <span className="font-mono text-[12px] font-medium">{date.getDate()}</span>
@@ -199,7 +199,7 @@ export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: Mont
         </div>
       </div>
 
-      <div className="fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+      <div className="fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
         <div className="font-display mb-4 text-[15px] font-semibold">Daily hours trend</div>
         <div style={{ height: 240 }}>
           <Line
@@ -208,7 +208,17 @@ export default function MonthView({ selectedDate, onSelectDay, onGoToDay }: Mont
               responsive: true,
               maintainAspectRatio: false,
               plugins: { legend: { display: false } },
-              scales: { y: { beginAtZero: true, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: { color: theme === 'dark' ? '#27272a' : '#f0f0f0' },
+                  ticks: { color: theme === 'dark' ? '#a1a1aa' : '#767676' }
+                },
+                x: {
+                  grid: { display: false },
+                  ticks: { color: theme === 'dark' ? '#a1a1aa' : '#767676' }
+                }
+              },
             }}
           />
         </div>

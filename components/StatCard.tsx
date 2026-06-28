@@ -14,7 +14,7 @@ export default function StatCard({ icon, value, label, accent = 'var(--ink)', pr
   return (
     <div
       className="fade-up relative overflow-hidden rounded-[14px] border p-4.5 transition-transform hover:-translate-y-0.5"
-      style={{ background: '#fff', borderColor: 'var(--border)' }}
+      style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
     >
       <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: accent }} />
       <div className="mb-2 text-xl">{icon}</div>

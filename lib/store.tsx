@@ -28,6 +28,8 @@ interface AppContextValue {
   deleteTask: (key: string, id: string) => void;
   saveGoals: (goals: AppData['goals']) => void;
   downloadData: () => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -36,9 +38,22 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<AppData>(DEFAULT_DATA);
   const [ready, setReady] = useState(false);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const toastId = useRef(0);
 
   useEffect(() => {
+    let savedTheme = localStorage.getItem('studytrack_theme') as 'light' | 'dark' | null;
+    if (!savedTheme) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      savedTheme = prefersDark ? 'dark' : 'light';
+    }
+    setTheme(savedTheme);
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+
     let loaded = DEFAULT_DATA;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -147,6 +162,19 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
     URL.revokeObjectURL(a.href);
   }, [data]);
 
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      localStorage.setItem('studytrack_theme', next);
+      if (next === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      return next;
+    });
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -165,6 +193,8 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
         deleteTask,
         saveGoals,
         downloadData,
+        theme,
+        toggleTheme,
       }}
     >
       {children}

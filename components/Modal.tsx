@@ -21,8 +21,8 @@ export default function Modal({ open, onClose, title, children, footer, maxWidth
       }}
     >
       <div
-        className="w-[90%] max-h-[85vh] overflow-y-auto rounded-[14px] border bg-white p-7 shadow-2xl"
-        style={{ borderColor: 'var(--border)', maxWidth }}
+        className="w-[90%] max-h-[85vh] overflow-y-auto rounded-[14px] border p-7 shadow-2xl"
+        style={{ background: 'var(--card-bg)', borderColor: 'var(--border)', maxWidth }}
       >
         <div className="font-display mb-5 text-xl font-semibold">{title}</div>
         {children}

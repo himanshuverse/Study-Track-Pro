@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarProps) {
-  const { data, getHourTarget, setHourTarget, getLoggedHours, getTasks } = useAppData();
+  const { data, getHourTarget, setHourTarget, getLoggedHours, getTasks, theme } = useAppData();
   const [calViewDate, setCalViewDate] = useState(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1));
 
   const key = dateKey(selectedDate);
@@ -86,7 +86,7 @@ export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarPr
                 style={{
                   opacity: otherMonth ? 0.3 : 1,
                   background: isSelected ? 'var(--ink)' : 'transparent',
-                  color: isSelected ? '#fff' : isToday ? 'var(--ink)' : allDone ? 'var(--success)' : 'var(--ink-soft)',
+                  color: isSelected ? 'var(--ink-contrast)' : isToday ? 'var(--ink)' : allDone ? 'var(--success)' : 'var(--ink-soft)',
                   fontWeight: isToday || isSelected ? 700 : 400,
                 }}
                 onMouseEnter={(e) => {
@@ -100,7 +100,7 @@ export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarPr
                 {hasTasks && (
                   <span
                     className="absolute bottom-[3px] left-1/2 h-[4px] w-[4px] -translate-x-1/2 rounded-full"
-                    style={{ background: isSelected ? 'rgba(255,255,255,0.7)' : 'var(--accent-practice)' }}
+                    style={{ background: isSelected ? 'var(--ink-contrast-soft)' : 'var(--accent-practice)' }}
                   />
                 )}
               </div>
@@ -114,7 +114,7 @@ export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarPr
         <div className="mb-2 px-2 text-[11px] font-semibold tracking-[0.12em] uppercase" style={{ color: 'var(--muted)' }}>
           Study Hours
         </div>
-        <div className="rounded-[14px] border p-3.5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+        <div className="rounded-[14px] border p-3.5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
           <div className="mb-2 text-xs" style={{ color: 'var(--muted)' }}>
             Target for {key === dateKey(today) ? 'today' : formatDateShort(selectedDate)}
           </div>
@@ -132,14 +132,14 @@ export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarPr
             <div className="flex flex-col gap-0.5">
               <button
                 onClick={() => setHourTarget(key, Math.min(24, target + 0.5))}
-                className="flex h-[22px] w-6 items-center justify-center rounded border text-xs transition-colors hover:bg-[var(--ink)] hover:text-white"
+                className="flex h-[22px] w-6 items-center justify-center rounded border text-xs transition-colors hover:bg-[var(--ink)] hover:text-[var(--ink-contrast)]"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface2)' }}
               >
                 ▲
               </button>
               <button
                 onClick={() => setHourTarget(key, Math.max(0, target - 0.5))}
-                className="flex h-[22px] w-6 items-center justify-center rounded border text-xs transition-colors hover:bg-[var(--ink)] hover:text-white"
+                className="flex h-[22px] w-6 items-center justify-center rounded border text-xs transition-colors hover:bg-[var(--ink)] hover:text-[var(--ink-contrast)]"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface2)' }}
               >
                 ▼
@@ -165,7 +165,7 @@ export default function Sidebar({ today, selectedDate, onSelectDate }: SidebarPr
         <div className="mb-2 px-2 text-[11px] font-semibold tracking-[0.12em] uppercase" style={{ color: 'var(--muted)' }}>
           Quick Stats
         </div>
-        <div className="flex flex-col gap-1.5 rounded-[14px] border p-3.5 text-[13px]" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+        <div className="flex flex-col gap-1.5 rounded-[14px] border p-3.5 text-[13px]" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
           <Row label="Tasks" value={`${doneToday}/${tasksToday.length}`} />
           <Row label="Hours" value={`${logged.toFixed(1)}h`} valueColor="var(--accent-practice)" />
           <Row label="Target" value={`${target}h`} />

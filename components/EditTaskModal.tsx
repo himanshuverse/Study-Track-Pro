@@ -45,7 +45,7 @@ function EditTaskModalInner({ task, onClose, onSave, onDelete }: { task: Task } 
   }
 
   const inputClass = 'w-full rounded-[9px] border px-3 py-2 text-sm outline-none focus:border-[var(--ink)]';
-  const inputStyle = { background: '#fff', borderColor: 'var(--border)' };
+  const inputStyle = { background: 'var(--card-bg)', borderColor: 'var(--border)' };
 
   return (
     <Modal
@@ -68,7 +68,7 @@ function EditTaskModalInner({ task, onClose, onSave, onDelete }: { task: Task } 
           >
             Cancel
           </button>
-          <button onClick={handleSave} className="rounded-[9px] px-4 py-2 text-[13px] font-medium text-white" style={{ background: 'var(--ink)' }}>
+          <button onClick={handleSave} className="rounded-[9px] px-4 py-2 text-[13px] font-medium" style={{ background: 'var(--ink)', color: 'var(--ink-contrast)' }}>
             Save changes
           </button>
         </>

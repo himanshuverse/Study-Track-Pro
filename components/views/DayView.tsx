@@ -58,12 +58,12 @@ export default function DayView({ selectedDate, onDateChange }: DayViewProps) {
               }
             }}
             className="rounded-[9px] border px-3 py-2 text-sm outline-none"
-            style={{ background: '#fff', borderColor: 'var(--border)' }}
+            style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
           />
           <button
             onClick={() => setShowAddForm(true)}
-            className="rounded-[9px] px-4 py-2 text-[13px] font-medium text-white"
-            style={{ background: 'var(--ink)' }}
+            className="rounded-[9px] px-4 py-2 text-[13px] font-medium"
+            style={{ background: 'var(--ink)', color: 'var(--ink-contrast)' }}
           >
             + Add task
           </button>
@@ -127,7 +127,7 @@ export default function DayView({ selectedDate, onDateChange }: DayViewProps) {
         />
       </div>
 
-      <div className="fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+      <div className="fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div className="font-display flex items-center gap-2.5 text-[15px] font-semibold">
             Tasks
@@ -144,7 +144,7 @@ export default function DayView({ selectedDate, onDateChange }: DayViewProps) {
                 style={{
                   borderColor: filter === f ? 'var(--ink)' : 'var(--border)',
                   background: filter === f ? 'var(--ink)' : 'transparent',
-                  color: filter === f ? '#fff' : 'var(--muted)',
+                  color: filter === f ? 'var(--ink-contrast)' : 'var(--muted)',
                 }}
               >
                 {f}

@@ -32,13 +32,13 @@ export default function AddTaskForm({ onAdd, onCancel }: AddTaskFormProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="min-w-[160px] flex-[2] rounded-[9px] border px-3 py-2 text-sm outline-none focus:border-[var(--ink)]"
-          style={{ background: '#fff', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as Category)}
           className="rounded-[9px] border px-3 py-2 text-sm outline-none"
-          style={{ background: '#fff', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
         >
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>
@@ -55,13 +55,13 @@ export default function AddTaskForm({ onAdd, onCancel }: AddTaskFormProps) {
           value={hours}
           onChange={(e) => setHours(e.target.value)}
           className="w-20 rounded-[9px] border px-3 py-2 text-sm outline-none focus:border-[var(--ink)]"
-          style={{ background: '#fff', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
         />
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value as Priority)}
           className="w-[110px] rounded-[9px] border px-3 py-2 text-sm outline-none"
-          style={{ background: '#fff', borderColor: 'var(--border)' }}
+          style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
         >
           <option value="high">High priority</option>
           <option value="med">Medium priority</option>
@@ -82,7 +82,7 @@ export default function AddTaskForm({ onAdd, onCancel }: AddTaskFormProps) {
                 setSubtaskInputs(next);
               }}
               className="flex-1 rounded-[9px] border px-3 py-2 text-sm outline-none focus:border-[var(--ink)]"
-              style={{ background: '#fff', borderColor: 'var(--border)' }}
+              style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}
             />
             {i === subtaskInputs.length - 1 ? (
               <button
@@ -107,7 +107,7 @@ export default function AddTaskForm({ onAdd, onCancel }: AddTaskFormProps) {
       </div>
 
       <div className="flex gap-2.5">
-        <button onClick={handleAdd} className="rounded-[9px] px-4 py-2 text-[13px] font-medium text-white" style={{ background: 'var(--ink)' }}>
+        <button onClick={handleAdd} className="rounded-[9px] px-4 py-2 text-[13px] font-medium" style={{ background: 'var(--ink)', color: 'var(--ink-contrast)' }}>
           Add task
         </button>
         <button

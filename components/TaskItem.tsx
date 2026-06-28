@@ -29,7 +29,7 @@ export default function TaskItem({ task, onToggle, onToggleSubtask, onEdit }: Ta
           style={{
             borderColor: task.done ? 'var(--ink)' : 'var(--border)',
             background: task.done ? 'var(--ink)' : 'transparent',
-            color: '#fff',
+            color: 'var(--ink-contrast)',
           }}
         >
           {task.done ? '✓' : ''}
@@ -96,7 +96,7 @@ export default function TaskItem({ task, onToggle, onToggleSubtask, onEdit }: Ta
                     style={{
                       borderColor: st.done ? 'var(--ink)' : 'var(--border)',
                       background: st.done ? 'var(--ink)' : 'transparent',
-                      color: '#fff',
+                      color: 'var(--ink-contrast)',
                     }}
                   >
                     {st.done ? '✓' : ''}

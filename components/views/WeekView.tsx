@@ -23,7 +23,7 @@ interface WeekViewProps {
 }
 
 export default function WeekView({ selectedDate, onSelectDay, onGoToDay }: WeekViewProps) {
-  const { data, getTasks, getHourTarget, getLoggedHours } = useAppData();
+  const { data, getTasks, getHourTarget, getLoggedHours, theme } = useAppData();
   const [weekOffset, setWeekOffset] = useState(0);
 
   const weekStart = useMemo(() => {
@@ -65,14 +65,14 @@ export default function WeekView({ selectedDate, onSelectDay, onGoToDay }: WeekV
       {
         label: 'Hours logged',
         data: weekStats.map((d) => d.hours),
-        backgroundColor: '#0a0a0a',
+        backgroundColor: theme === 'dark' ? '#f4f4f5' : '#0a0a0a',
         borderRadius: 6,
         maxBarThickness: 36,
       },
       {
         label: 'Target',
         data: weekStats.map((d) => d.target),
-        backgroundColor: '#e3e3e3',
+        backgroundColor: theme === 'dark' ? '#27272a' : '#e3e3e3',
         borderRadius: 6,
         maxBarThickness: 36,
       },
@@ -168,19 +168,19 @@ export default function WeekView({ selectedDate, onSelectDay, onGoToDay }: WeekV
               }}
               className="fade-up rounded-[12px] border p-3.5 text-left transition-transform hover:-translate-y-0.5"
               style={{
-                background: isSelected ? 'var(--ink)' : '#fff',
-                borderColor: isToday ? 'var(--ink)' : 'var(--border)',
-                color: isSelected ? '#fff' : 'var(--ink)',
+                background: isSelected ? 'var(--ink)' : 'var(--card-bg)',
+                borderColor: isSelected ? 'var(--ink)' : isToday ? 'var(--ink)' : 'var(--border)',
+                color: isSelected ? 'var(--ink-contrast)' : 'var(--ink)',
               }}
             >
-              <div className="text-[11px] font-semibold" style={{ color: isSelected ? 'rgba(255,255,255,0.7)' : 'var(--muted)' }}>
+              <div className="text-[12px] font-bold uppercase" style={{ opacity: isSelected ? 0.7 : 0.4 }}>
                 {WEEKDAY_SHORT[d.date.getDay()]}
               </div>
-              <div className="font-display text-lg font-bold">{d.date.getDate()}</div>
-              <div className="mt-1.5 text-[11px]" style={{ color: isSelected ? 'rgba(255,255,255,0.7)' : 'var(--muted)' }}>
+              <div className="font-display my-1 text-2xl font-bold">{d.date.getDate()}</div>
+              <div className="text-[11px] font-semibold" style={{ color: isSelected ? 'var(--ink-contrast-soft)' : 'var(--muted)' }}>
                 {d.done}/{d.total} tasks
               </div>
-              <div className="font-mono text-[11px]" style={{ color: isSelected ? 'rgba(255,255,255,0.7)' : 'var(--muted)' }}>
+              <div className="font-mono text-[11px]" style={{ color: isSelected ? 'var(--ink-contrast-soft)' : 'var(--muted)' }}>
                 {d.hours.toFixed(1)}h
               </div>
             </button>
@@ -188,7 +188,7 @@ export default function WeekView({ selectedDate, onSelectDay, onGoToDay }: WeekV
         })}
       </div>
 
-      <div className="fade-up rounded-[14px] border p-5" style={{ background: '#fff', borderColor: 'var(--border)' }}>
+      <div className="fade-up rounded-[14px] border p-5" style={{ background: 'var(--card-bg)', borderColor: 'var(--border)' }}>
         <div className="font-display mb-4 text-[15px] font-semibold">Hours logged vs target</div>
         <div style={{ height: 280 }}>
           <Bar
@@ -196,8 +196,27 @@ export default function WeekView({ selectedDate, onSelectDay, onGoToDay }: WeekV
             options={{
               responsive: true,
               maintainAspectRatio: false,
-              plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } } },
-              scales: { y: { beginAtZero: true, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } },
+              plugins: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    usePointStyle: true,
+                    boxWidth: 8,
+                    color: theme === 'dark' ? '#a1a1aa' : '#767676'
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: { color: theme === 'dark' ? '#27272a' : '#f0f0f0' },
+                  ticks: { color: theme === 'dark' ? '#a1a1aa' : '#767676' }
+                },
+                x: {
+                  grid: { display: false },
+                  ticks: { color: theme === 'dark' ? '#a1a1aa' : '#767676' }
+                }
+              },
             }}
           />
         </div>
